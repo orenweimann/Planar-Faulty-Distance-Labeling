@@ -1,0 +1,206 @@
+\documentclass[11pt]{article}
+
+\usepackage{fullpage}
+\usepackage{amsthm,amssymb,amsmath}  
+\usepackage{xspace,enumerate}
+\usepackage[utf8]{inputenc}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage{authblk}
+\usepackage[hypertexnames=false,colorlinks=true,urlcolor=Blue,citecolor=Green,linkcolor=BrickRed]{hyperref}
+
+\newcommand{\myparagraph}[1]{\paragraph{#1.}}
+
+ % \theoremstyle{plain}
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lemma}[theorem]{Lemma}  
+  \newtheorem{corollary}[theorem]{Corollary}  
+  \newtheorem{proposition}[theorem]{Proposition}  
+  \newtheorem{fact}[theorem]{Fact}
+  \newtheorem{observation}[theorem]{Observation}
+  \newtheorem{definition}[theorem]{Definition}
+  \newtheorem{example}[theorem]{Example}
+  \newtheorem{remark}[theorem]{Remark}
+ 
+  \newtheorem*{claim}{Claim}
+ 
+
+\author[1,2]{Panagiotis Charalampopoulos}
+\author[3]{Paweł Gawrychowski}
+\author[2]{Shay Mozes}
+\author[4]{Oren Weimann}
+
+
+\affil[1]{
+Department of Informatics, King's College London, UK\\
+\href{mailto:panagiotis.charalampopoulos@kcl.ac.uk}{panagiotis.charalampopoulos@kcl.ac.uk}}
+
+\affil[2]{
+Efi Arazi School of Computer Science, The Interdisciplinary Center Herzliya, Israel\\
+\href{mailto:smozes@idc.ac.il}{smozes@idc.ac.il}}
+
+\affil[3]{
+Institute of Computer Science, University of Wrocław, Poland\\
+\href{mailto:gawry@mimuw.edu.pl}{gawry@mimuw.edu.pl}}
+
+\affil[4]{
+Department of Computer Science, University of Haifa, Israel\\
+\href{mailto:oren@cs.haifa.ac.il}{oren@cs.haifa.ac.il}
+}
+
+
+\date{\vspace{-5ex}}
+
+
+\usepackage[dvipsnames,usenames]{color}
+
+
+\usepackage[ruled]{algorithm}
+\usepackage[noend]{algpseudocode}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[noadjust]{cite}
+  \usepackage{microtype}
+    \usepackage{xspace}
+    \usepackage{amsmath,amsfonts}
+    \usepackage{wasysym}
+  \usepackage{makecell}
+  \usepackage{tabularx}
+  \usepackage{comment}
+  \usepackage{todonotes}
+  \usepackage{thmtools}
+  \usepackage{thm-restate}
+  \usepackage[capitalise]{cleveref}
+  \usepackage{verbatim}
+\usepackage{units}
+\usepackage{color}
+\definecolor{darkblue}{rgb}{0,0.08,0.45}
+  \usepackage{epsfig}
+    \usepackage{graphics}
+\usepackage{pgf,tikz}
+  \usetikzlibrary{trees, arrows, shapes, snakes}
+\usepackage{marvosym}
+  \usepackage[caption=false]{subfig}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathmorphing,shapes}
+\usetikzlibrary{calc,decorations.pathmorphing,shapes}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{etoolbox}
+\usepackage[title]{appendix}
+\usepackage{enumitem}
+
+
+\newif\iffull
+\fulltrue
+
+\newif\ifspreport
+\spreporttrue
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\TG}{\mathcal{T}}
+\newcommand{\cOtilde}{\tilde{\cO}}
+\newcommand{\Vor}{\textsf{Vor}}
+\newcommand{\VD}{\textsf{VD}}
+\newcommand{\out}[1]{#1^{out}}
+\newcommand{\VDin}{\textsf{VD}_{in}}
+\newcommand{\VDout}{\textsf{VD}_{out}}
+\newcommand{\weight}{{\rm \omega}}
+
+
+\begin{document}
+
+\title{Fault-Tolerant Distance Labeling for Planar Graphs\thanks{This work was partially supported by the Israel Science Foundation under grant number 592/17.}}
+\maketitle
+
+%\thispagestyle{empty}
+
+\begin{abstract}
+In fault-tolerant distance labeling we wish to assign short labels to the vertices of a graph $G$ such that from the labels of any three vertices $u,v,w$ we can infer the $u$-to-$v$ distance in the graph $G\setminus \{v\}$. We show that any directed weighted planar graph admits labels of size\footnote{The $\cOtilde(\cdot)$ notation hides polylogarithmic factors.} $\cOtilde(n^{2/3})$. \todo{multiple faults, approximate distance labeling (improve query time in Chechick et al}
+\end{abstract}
+
+
+%\clearpage
+%\setcounter{page}{1}
+
+\section{Introduction}
+
+\paragraph{Exact distance labeling.}
+Shay's SODA'19 paper and citations within
+
+\paragraph{Approximate distance labeling.}
+In~\cite{DBLP:conf/stoc/AbrahamCG12} it was shown that for
+edge weights in $[1, M]$ and parameter $\epsilon  > 0$ there is a labeling scheme with labels of size 
+$\lambda = O(\epsilon^{-1}\log^2 n\log(nM) \cdot (\epsilon^{-1}
++ \log n))$ such that from the labels of any two vertices $s$ and $t$ and of any set $F$ of faulty vertices/edges we can deduce the distance between $s$ and $t$ in $G \setminus F$ with stretch $(1 + \epsilon)$ in $O(|F|^2\cdot\lambda)$ time. In \cref{sec:approx} we show how to improve the query time to $O(|F| \cdot\lambda)$.
+
+
+
+
+
+%\paragraph{Distance oracles for planar graphs.}
+%Distance oracles for planar graphs have been extensively studied. Works on exact distance oracles for planar graphs started in the 1990's with oracles requiring $\cOtilde(n^2/Q)$ space and $\cOtilde(Q)$ query-time for any $Q \in [1,n]$~\cite{DBLP:conf/wg/Djidjev96,DBLP:conf/esa/ArikatiCCDSZ96}. 
+%Note that this includes the two trivial approaches mentioned above.  
+%Over the past three decades, many other works presented exact distance oracles for planar graphs with increasingly better space to query-time tradeoffs~\cite{DBLP:conf/wg/Djidjev96,DBLP:conf/esa/ArikatiCCDSZ96,DBLP:conf/stoc/ChenX00,FR,DBLP:conf/wads/Nussbaum11,DBLP:conf/soda/MozesS12,DBLP:journals/algorithmica/Cabello12,DBLP:conf/focs/Cohen-AddadDW17,vorexact}. 
+%
+%Until recently, no distance oracles with subquadratic space and polylogarithmic query time were known. 
+%Cohen-Addad et al.~\cite{DBLP:conf/focs/Cohen-AddadDW17}, inspired by Cabello's use of Voronoi diagrams for the diameter problem in planar graphs~\cite{DBLP:conf/soda/Cabello17}, provided the first such oracle. 
+%The currently best known tradeoff~\cite{vorexact} is an oracle with  $\cOtilde(n^{3/2}/Q)$ space and $\cOtilde(Q)$ query-time for any $Q \in [1,n^{1/2}]$.
+%Note that all known oracles with nearly linear (i.e. $\cOtilde(n)$) space require $\Omega(\sqrt{n})$ time to answer queries.\todo{add our new oracle}
+%
+% 
+%\paragraph{Our results and techniques.}
+%
+
+\section{Preliminaries} \label{sec:prelim}
+
+Throughout the paper we consider as input a weighted directed planar graph $G=(V(G),E(G))$, embedded in the plane.
+The dual of a planar graph $G$ is another planar graph $G^*$ whose vertices correspond to faces of $G$ and
+vice versa. Arcs of $G^*$ are in one-to-one correspondence with arcs of $G$; 
+there is an arc $e^*$ from vertex $f^*$ to vertex $g^*$ of $G^*$
+if and only if the corresponding faces $f$ and $g$ of $G$ are to the left and right of the arc $e$, respectively.
+
+
+We assume that the input graph has no negative length cycles.
+We can transform the graph in a standard~\cite{DBLP:conf/esa/MozesW10} way so that all edge weights are non-negative and distances are preserved.
+With another standard transformation we can guarantee, in $\cO(n \frac{\log^2 n}{\log \log n})$ time, that each vertex has constant degree and that the graph is triangulated, while distances are preserved and without increasing asymptotically the size of the graph.
+We further assume that shortest paths are unique; this can be ensured in $\cO(n)$ time by a deterministic perturbation of the edge weights~\cite{DBLP:conf/stoc/0001FL18}.
+Let $d_G(u,v)$ denote the distance from a vertex $u$ to a vertex $v$ in $G$.
+
+\paragraph{Separators and recursive decompositions.}
+Miller~\cite{DBLP:conf/stoc/Miller84} showed how to compute, in a biconnected triangulated planar graph with $n$ vertices, a simple cycle of size  $\cO(\sqrt{n})$ that separates the graph into two subgraphs, each with at most $2n/3$ vertices. Simple cycle separators  can be used to recursively separate a planar graph until pieces have constant size.
+The authors of~\cite{DBLP:conf/stoc/KleinMS13} show how to obtain a complete recursive decomposition tree $\TG$ of $G$ in $\cO(n)$ time. 
+$\TG$ is a binary tree whose nodes correspond to subgraphs of $G$ (pieces), with the root being all of $G$ and the leaves being pieces of constant size.
+We identify each piece $P$ with the node representing it in $\TG$. We can thus abuse notation and write $P\in \TG$.
+An $r$-division~\cite{DBLP:journals/siamcomp/Frederickson87} of a planar graph, for $r \in [1,n]$, is a decomposition of the graph into $\cO(n/r)$ pieces, each of size $\cO(r)$, such that each piece has $\cO(\sqrt{r})$ boundary vertices, i.e.~vertices that belong to some separator along the recursive decomposition used to obtain $P$.
+Another desired property of an $r$-division is that the boundary vertices lie on a constant number of faces of the piece (holes).
+For every $r$ larger than some constant, an $r$-division with few holes is represented in the decomposition tree $\TG$ of~\cite{DBLP:conf/stoc/KleinMS13}. In fact, it is not hard to see that if the original graph $G$ is triangulated then all vertices of each hole of a piece are boundary vertices.
+Throughout the paper, to avoid confusion, we use ``nodes" when referring to $\TG$ and ``vertices" when referring to $G$.
+We denote the boundary vertices of a piece $P$ by $\partial P$. 
+%We refer to non-boundary vertices as internal.
+%We assume for simplicity that each hole is a simple cycle. Non-simple cycles do not pose a significant obstacle, as we discuss  at the end of~\cref{sec:onehole}.
+%
+%It is shown in~\cite[Theorem 3]{DBLP:conf/stoc/KleinMS13} that, given a geometrically decreasing sequence of numbers $(r_m, r_{m-1}, \ldots, r_1)$, where $r_1$ is a sufficiently large constant, $r_{i+1}/r_i=b$ for all $i$ for some $b>1$, and $r_m=n$, we can obtain the $r_i$-divisions for all $i$ in time $\cO(n)$ in total.
+%For convenience we define the only piece in the $r_m$ division to be $G$ itself.
+%These $r$-divisions satisfy the property that a piece in the $r_i$-division is a ---not necessarily strict--- descendant (in $\TG$) of a piece in the $r_j$-division for each $j>i$. This ancestry relation between the pieces of an $r$-division can be captures by a tree $\TG$ called the recursive $r$-division tree.
+
+The boundary vertices of a piece $P \in \TG$ that lie on a hole $h$ of $P$ separate the graph $G$ into two subgraphs $G_1$ and $G_2$ (the cycle is in both subgraphs). One of these two subgraphs is enclosed by the cycle and the other is not. Moreover, $P$ is a subgraph of one of these two subgraphs, say $G_1$. We then call $G_2$ the outside of hole $h$ with respect to $P$ and denote it by $P^{h,out}$.
+In the sections where we assume that the boundary vertices of each piece lie on a single hole that is a simple cycle, the outside of this hole with respect to $P$ is $G\setminus(P \setminus \partial P)$ and to simplify notation we denote it by $\out{P}$. 
+
+
+\section{Exact distance labeling}\label{sec:exact}
+Each vertex $v$ stores the distances among boundary nodes of its piece avoiding it. Also, each vertex stores for each piece in the complete recursive decomposition above the $r$-division, the distances from/to the boundary of the piece avoiding the sibling of the piece (to be clear - also avoiding the boundary of the sibling).  Overall $r + n/\sqrt{r}$ balancing at $r = n^2/3$.
+\todo{multiple faults}
+
+\section{Approximate distance labeling}\label{sec:approx}
+In this section we show how to improve the query time in~\cite{DBLP:conf/stoc/AbrahamCG12}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
